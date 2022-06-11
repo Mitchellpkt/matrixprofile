@@ -13,8 +13,6 @@ try:
 except ImportError:
     from collections import Iterable
 
-import os
-
 import numpy as np
 
 from matplotlib import pyplot as plt
