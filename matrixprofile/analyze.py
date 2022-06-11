@@ -7,8 +7,6 @@ from __future__ import unicode_literals
 range = getattr(__builtins__, 'xrange', range)
 # end of py2 compatability boilerplate
 
-import math
-
 from matrixprofile import core
 
 from matrixprofile.preprocess import preprocess
