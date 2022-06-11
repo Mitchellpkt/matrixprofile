@@ -265,6 +265,6 @@ def analyze(ts, query=None, windows=None, sample_pct=1.0, threshold=0.98, n_jobs
     elif single_window and is_approx:
         result = analyze_mp_approximate(ts, query, windows, sample_pct, n_jobs=n_jobs)
     else:
-        raise RuntimeError('Param combination resulted in an uknown operation')
+        raise RuntimeError('Param combination resulted in an unknown operation')
 
     return result
