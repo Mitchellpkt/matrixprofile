@@ -427,7 +427,7 @@ def plot_discords_pmp(profile, use_right_edge: bool = False):
 
         # for idx in discords:
         axes[2].plot(idx + int(use_right_edge) * w, mp_adjusted[idx], c='r', marker='*', lw=0, markersize=10)
-        axes[2].set_title('Window Size = {}'.format(w))
+        axes[2].set_title('Window Size {}'.format(w))
 
         fig.subplots_adjust(right=0.8)
         cbar_ax = fig.add_axes([1, 0.46, 0.01, 0.1])
