@@ -94,7 +94,7 @@ def visualize(profile, **kwargs):
             figures = __combine(figures, plot_motifs_mp(profile))
 
         if 'discords' in profile and len(profile['discords']) > 0:
-            figures = __combine(figures, plot_discords_mp(profile))
+            figures = __combine(figures, plot_discords_mp(profile, **kwargs))
 
     # plot PMP
     if core.is_pmp_obj(profile):
@@ -322,7 +322,7 @@ def plot_av_mp(profile):
     return fig
 
 
-def plot_discords_mp(profile):
+def plot_discords_mp(profile, use_right_edge: bool = False):
     """
     Plot discords for a MatrixProfile data structure.
 
@@ -330,6 +330,10 @@ def plot_discords_mp(profile):
     ----------
     profile : dict_like
         The matrix profile object to plot.
+    use_right_edge : boolean
+        If True, plots the matrix profile with x-axis indices from
+        the right edge of the windows (so that it corresponds with
+        calculations from past rather than upcoming data)
 
     Returns
     -------
@@ -353,12 +357,14 @@ def plot_discords_mp(profile):
     axes[0].plot(np.arange(len(ts)), ts)
     axes[0].set_ylabel('Data')
 
-    axes[2].plot(np.arange(len(mp_adjusted)), mp_adjusted)
+    print(f"{use_right_edge=}")
+    offset: int = int(use_right_edge) * w
+    axes[2].plot(np.arange(offset, offset + len(mp_adjusted)), mp_adjusted)
     axes[2].set_ylabel('Matrix Profile')
     axes[2].set_title('Window Size {}'.format(w))
 
     for idx in discords:
-        axes[2].plot(idx, mp_adjusted[idx], c='r', marker='*', lw=0, markersize=10)
+        axes[2].plot(idx + offset, mp_adjusted[idx], c='r', marker='*', lw=0, markersize=10)
 
     fig.subplots_adjust(right=0.8)
     cbar_ax = fig.add_axes([1, 0.46, 0.01, 0.1])
