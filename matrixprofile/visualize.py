@@ -59,7 +59,7 @@ def is_visualizable(obj):
     return core.is_mp_obj(obj) or core.is_pmp_obj(obj) or core.is_stats_obj(obj)
 
 
-def visualize(profile):
+def visualize(profile, **kwargs):
     """
     Automatically creates plots for the provided data structure. In some cases
     many plots are created. For example, when a MatrixProfile is passed with
@@ -106,7 +106,7 @@ def visualize(profile):
             figures = __combine(figures, plot_motifs_pmp(profile))
 
         if 'discords' in profile and len(profile['discords']) > 0:
-            figures = __combine(figures, plot_discords_pmp(profile))
+            figures = __combine(figures, plot_discords_pmp(profile, **kwargs))
 
     # plot stats
     if core.is_stats_obj(profile):
@@ -377,7 +377,7 @@ def plot_discords_mp(profile):
     return fig
 
 
-def plot_discords_pmp(profile):
+def plot_discords_pmp(profile, use_right_edge: bool = False):
     """
     Plot discords for the given Pan-MatrixProfile data structure.
 
@@ -385,6 +385,11 @@ def plot_discords_pmp(profile):
     ----------
     profile : dict_like
         The pmp object to plot.
+
+    use_right_edge : boolean
+        If True, plots the matrix profile with x-axis indices from
+        the right edge of the windows (so that it corresponds with
+        calculations from past rather than upcoming data)
 
     Returns
     -------
@@ -413,11 +418,11 @@ def plot_discords_pmp(profile):
         axes[0].plot(np.arange(len(ts)), ts)
         axes[0].set_ylabel('Data')
 
-        axes[2].plot(np.arange(len(mp_adjusted)), mp_adjusted)
+        axes[2].plot(np.arange(len(mp_adjusted)) + int(use_right_edge) * w, mp_adjusted)
         axes[2].set_ylabel('Matrix Profile')
 
         # for idx in discords:
-        axes[2].plot(idx, mp_adjusted[idx], c='r', marker='*', lw=0, markersize=10)
+        axes[2].plot(idx + int(use_right_edge) * w, mp_adjusted[idx], c='r', marker='*', lw=0, markersize=10)
         axes[2].set_title('Window Size = {}'.format(w))
 
         fig.subplots_adjust(right=0.8)

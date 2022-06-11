@@ -20,7 +20,7 @@ from matrixprofile.algorithms import scrimp_plus_plus
 from matrixprofile import visualize
 
 
-def analyze_pmp(ts, query, sample_pct, threshold, windows=None, n_jobs=1):
+def analyze_pmp(ts, query, sample_pct, threshold, windows=None, n_jobs=1, **kwargs):
     """
     Computes the Pan-MatrixProfile, top 3 motifs and top 3 discords for the
     provided time series and query. Additionally, plots for the PMP, motifs
@@ -77,7 +77,7 @@ def analyze_pmp(ts, query, sample_pct, threshold, windows=None, n_jobs=1):
     profile = discords(profile)
 
     # plot pmp
-    figures = visualize(profile)
+    figures = visualize(profile, **kwargs)
 
     return (profile, figures)
 
@@ -169,7 +169,7 @@ def analyze_mp_approximate(ts, query, window, sample_pct, n_jobs=1):
 
 
 def analyze(ts, query=None, windows=None, sample_pct=1.0, threshold=0.98, n_jobs=1,
-            preprocessing_kwargs = None):
+            preprocessing_kwargs = None, **kwargs):
     """
     Runs an appropriate workflow based on the parameters passed in. The goal
     of this function is to compute all fundamental algorithms on the provided
@@ -259,7 +259,7 @@ def analyze(ts, query=None, windows=None, sample_pct=1.0, threshold=0.98, n_jobs
 
     # use PMP with no window provided
     if no_window or many_windows:
-        result = analyze_pmp(ts, query, sample_pct, threshold, windows=windows, n_jobs=n_jobs)
+        result = analyze_pmp(ts, query, sample_pct, threshold, windows=windows, n_jobs=n_jobs, **kwargs)
     elif single_window and is_exact:
         result = analyze_mp_exact(ts, query, windows, n_jobs=n_jobs)
     elif single_window and is_approx:
