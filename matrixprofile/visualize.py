@@ -352,7 +352,11 @@ def plot_discords_mp(profile, use_right_edge: bool = False):
 
     fig, axes = plt.subplots(3, 1, sharex=True, figsize=(15, 7), gridspec_kw={'height_ratios': [25, 5, 25]})
 
-    pos = axes[1].imshow([mp_adjusted,], aspect='auto', cmap='coolwarm')
+    if use_right_edge:
+        distance_values: np.ndarray = np.concatenate((np.full((w,), np.inf), mp_adjusted[~np.isnan(mp_adjusted)]))
+    else:
+        distance_values: np.ndarray = mp_adjusted
+    pos = axes[1].imshow([distance_values, ], aspect='auto', cmap='coolwarm')
     axes[1].set_yticks([])
     axes[0].plot(np.arange(len(ts)), ts)
     axes[0].set_ylabel('Data')
@@ -417,7 +421,11 @@ def plot_discords_pmp(profile, use_right_edge: bool = False):
 
         fig, axes = plt.subplots(3, 1, sharex=True, figsize=(15, 7), gridspec_kw={'height_ratios': [25, 5, 25]})
 
-        pos = axes[1].imshow([mp_adjusted,], aspect='auto', cmap='coolwarm')
+        if use_right_edge:
+            distance_values: np.ndarray = np.concatenate((np.full((w,), np.inf), mp_adjusted[~np.isinf(mp_adjusted)]))
+        else:
+            distance_values: np.ndarray = mp_adjusted
+        pos = axes[1].imshow([distance_values, ], aspect='auto', cmap='coolwarm')
         axes[1].set_yticks([])
         axes[0].plot(np.arange(len(ts)), ts)
         axes[0].set_ylabel('Data')
@@ -624,7 +632,7 @@ def plot_snippets(snippets, ts):
         
     """
     figures = []
-    
+
     for i in range(len(snippets)):
         snippet_id = str(i+1)
         snippet_start = snippets[i]['index']
@@ -671,6 +679,6 @@ def plot_snippets(snippets, ts):
         plt.legend(loc="upper right")       
         fig.tight_layout()       
         figures.append(fig)
-    
+
     return figures
 
