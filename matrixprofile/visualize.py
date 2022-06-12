@@ -322,7 +322,7 @@ def plot_av_mp(profile):
     return fig
 
 
-def plot_discords_mp(profile, use_right_edge: bool = False):
+def plot_discords_mp(profile, use_right_edge: bool = False, **kwargs):
     """
     Plot discords for a MatrixProfile data structure.
 
@@ -365,7 +365,7 @@ def plot_discords_mp(profile, use_right_edge: bool = False):
     offset: int = int(use_right_edge) * w
     axes[2].plot(np.arange(offset, offset + len(mp_adjusted)), mp_adjusted)
     axes[2].set_ylabel('Matrix Profile')
-    axes[2].set_title('Window Size {}'.format(w))
+    axes[2].set_title('Window Size {}'.format(w) + kwargs.get('title_suffix', ''))
 
     for idx in discords:
         axes[2].plot(idx + offset, mp_adjusted[idx], c='r', marker='*', lw=0, markersize=10)
@@ -385,7 +385,7 @@ def plot_discords_mp(profile, use_right_edge: bool = False):
     return fig
 
 
-def plot_discords_pmp(profile, use_right_edge: bool = False):
+def plot_discords_pmp(profile, use_right_edge: bool = False, **kwargs):
     """
     Plot discords for the given Pan-MatrixProfile data structure.
 
@@ -435,7 +435,7 @@ def plot_discords_pmp(profile, use_right_edge: bool = False):
 
         # for idx in discords:
         axes[2].plot(idx + int(use_right_edge) * w, mp_adjusted[idx], c='r', marker='*', lw=0, markersize=10)
-        axes[2].set_title('Window Size {}'.format(w))
+        axes[2].set_title('Window Size {}'.format(w) + kwargs.get('title_suffix', ''))
 
         fig.subplots_adjust(right=0.8)
         cbar_ax = fig.add_axes([1, 0.46, 0.01, 0.1])
