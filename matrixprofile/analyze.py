@@ -257,6 +257,10 @@ def analyze(ts, query=None, windows=None, sample_pct=1.0, threshold=0.98, n_jobs
     is_exact = sample_pct >= 1
     is_approx = sample_pct > 0 and sample_pct < 1
 
+    # Warn (via plot title) if there are still NaNs in the data
+    if any(core.np.isnan(x) for x in ts):
+        kwargs['title_suffix'] = f"{kwargs.get('title_suffix', '')}\n[NB: possible anomalous plots due to NaNs in data]"
+
     # use PMP with no window provided
     if no_window or many_windows:
         result = analyze_pmp(ts, query, sample_pct, threshold, windows=windows, n_jobs=n_jobs, **kwargs)
