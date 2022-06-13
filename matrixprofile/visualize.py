@@ -361,7 +361,6 @@ def plot_discords_mp(profile, use_right_edge: bool = False):
     axes[0].plot(np.arange(len(ts)), ts)
     axes[0].set_ylabel('Data')
 
-    print(f"{use_right_edge=}")
     offset: int = int(use_right_edge) * w
     axes[2].plot(np.arange(offset, offset + len(mp_adjusted)), mp_adjusted)
     axes[2].set_ylabel('Matrix Profile')
