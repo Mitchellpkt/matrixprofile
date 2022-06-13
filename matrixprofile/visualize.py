@@ -353,7 +353,7 @@ def plot_discords_mp(profile, use_right_edge: bool = False, **kwargs):
     fig, axes = plt.subplots(3, 1, sharex=True, figsize=(15, 7), gridspec_kw={'height_ratios': [25, 5, 25]})
 
     if use_right_edge:
-        distance_values: np.ndarray = np.concatenate((np.full((w,), np.inf), mp_adjusted[~np.isnan(mp_adjusted)]))
+        distance_values: np.ndarray = np.concatenate((np.full((w,), np.nan), mp_adjusted[~np.isnan(mp_adjusted)]))
     else:
         distance_values: np.ndarray = mp_adjusted
     pos = axes[1].imshow([distance_values, ], aspect='auto', cmap='coolwarm')
