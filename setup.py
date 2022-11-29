@@ -78,7 +78,7 @@ setuptools.setup(
         "Intended Audience :: Science/Research",
         "Intended Audience :: Information Technology",
         "Intended Audience :: Developers",
-        "Operating System :: MacOS",
+        'Operating System :: MacOS :: MacOS X',
         "Operating System :: Microsoft :: Windows",
         "Operating System :: POSIX",
         "Topic :: Software Development",
