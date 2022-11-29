@@ -83,6 +83,9 @@ setuptools.setup(
         "Operating System :: POSIX",
         "Topic :: Software Development",
         "Topic :: Scientific/Engineering",
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
     ],
     keywords="matrix profile time series discord motif analysis data science anomaly pattern",
 )
